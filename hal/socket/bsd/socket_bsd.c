@@ -132,7 +132,7 @@ Handleset_waitReady(HandleSet self, unsigned int timeoutMs)
 
                 if (sock) {
                     self->fds[i].fd = sock->fd;
-                    self->fds[i].events = POLL_IN;
+                    self->fds[i].events = POLLIN;
                 }
             }
         }
