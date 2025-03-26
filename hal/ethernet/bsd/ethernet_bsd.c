@@ -274,6 +274,9 @@ Ethernet_createSocket(const char* interfaceId, uint8_t* destAddress)
 
     /* Find the first unused BPF device node. */
     self->bpf = -1;
+#ifdef __QNXNTO__
+    self->bpf = open("/dev/bpf", O_RDWR);
+#else
     for (i = 0; i < 99; ++i)
     {
         sprintf(bpfFileStringBuffer, "/dev/bpf%i", i);
@@ -281,6 +284,7 @@ Ethernet_createSocket(const char* interfaceId, uint8_t* destAddress)
 
         if (self->bpf != -1) break;
     }
+#endif
 
     /* Did not found any unused, fail. */
     if (self->bpf == -1)

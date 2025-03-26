@@ -101,7 +101,7 @@ IF(APPLE)
 set (libhal_SRCS
     ${libhal_macos_SRCS}
 )
-ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
+ELSEIF(CMAKE_SYSTEM_NAME STREQUAL "FreeBSD" OR CMAKE_SYSTEM_NAME STREQUAL "QNX")
 set (libhal_SRCS
     ${libhal_bsd_SRCS}
 )
@@ -188,7 +188,7 @@ SET_TARGET_PROPERTIES(hal-shared PROPERTIES
   COMPILE_FLAGS "-fPIC"
 )
 
-IF(UNIX)
+IF(UNIX AND NOT CMAKE_SYSTEM_NAME STREQUAL "QNX")
   IF (CONFIG_SYSTEM_HAS_CLOCK_GETTIME)
      target_link_libraries (hal
          -lpthread
@@ -199,7 +199,7 @@ IF(UNIX)
          -lpthread
      )
   ENDIF (CONFIG_SYSTEM_HAS_CLOCK_GETTIME)
-ENDIF(UNIX)
+ENDIF()
 
 IF(CONFIG_USE_EXTERNAL_MBEDTLS_DYNLIB)
   target_link_libraries(hal mbedcrypto mbedx509 mbedtls)

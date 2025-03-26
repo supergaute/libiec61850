@@ -355,8 +355,12 @@ add_library (iec61850 STATIC ${library_SRCS})
 target_link_libraries(iec61850
 	hal
 )
-
-IF(UNIX)
+IF (CMAKE_SYSTEM_NAME STREQUAL "QNX")
+     target_link_libraries (iec61850
+         -lsocket
+         -lm
+     )
+ELSEIF(UNIX)
   IF (CONFIG_SYSTEM_HAS_CLOCK_GETTIME)
      target_link_libraries (iec61850
          -lpthread
@@ -369,7 +373,7 @@ IF(UNIX)
          -lm
      )
   ENDIF (CONFIG_SYSTEM_HAS_CLOCK_GETTIME)
-ENDIF(UNIX)
+ENDIF()
 IF(MINGW)
   target_link_libraries(iec61850-shared ws2_32 iphlpapi)
   target_link_libraries(iec61850 ws2_32 iphlpapi)
