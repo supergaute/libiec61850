@@ -132,9 +132,9 @@ FileSystem_readDirectory(DirectoryHandle directory, bool* isDirectory)
             return FileSystem_readDirectory(directory, isDirectory);
         else {
             if (isDirectory != NULL) {
-                if (dir->d_type == DT_DIR)
+                /*if (dir->d_type == DT_DIR)
                     *isDirectory = true;
-                else
+                else*/
                     *isDirectory = false;
             }
 
